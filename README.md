@@ -1,5 +1,5 @@
 
-# An API assignment for (senior) backend node.js position.
+# Dummy API
 Developed with Typescript, Express & TypeORM.
 
 ## Setup:
@@ -14,16 +14,16 @@ Developed with Typescript, Express & TypeORM.
 - Endpoint: POST `http://localhost:3000/auth/login`
 - Body:
   ```
-    {
-        "username": "admin",
-        "password": "admin"
-    }
+  {
+    "username": "admin",
+    "password": "admin"
+  }
   ```
 - Response:
   ```
-    {
-        "token": <token>
-    }
+  {
+    "token": <token>
+  }
   ```
 
 ### Get all users
@@ -32,18 +32,18 @@ Developed with Typescript, Express & TypeORM.
   - `jwt-token` => we should use as the value the token that we received from login.
 - Response:
   ```
-    [
-        {
-            "id": 1,
-            "username": "admin",
-            "role": "ADMIN"
-        },
-        {
-            "id": 2,
-            "username": "test.account",
-            "role": "USER"
-        }
-    ]
+  [
+    {
+      "id": 1,
+      "username": "admin",
+      "role": "ADMIN"
+    },
+    {
+      "id": 2,
+      "username": "test.account",
+      "role": "USER"
+    }
+  ]
   ```
 
 ### Get one user by id
@@ -52,11 +52,11 @@ Developed with Typescript, Express & TypeORM.
   - `jwt-token` => we should use as the value the token that we received from login.
 - Response:
   ```
-    {
-        "id": 1,
-        "username": "admin",
-        "role": "ADMIN"
-    }
+  {
+    "id": 1,
+    "username": "admin",
+    "role": "ADMIN"
+  }
   ```
 
 ### Create new user
@@ -65,24 +65,24 @@ Developed with Typescript, Express & TypeORM.
   - `jwt-token` => we should use as the value the token that we received from login.
 - Body:
   ```
-    {
-        "username": "new_test.account",
-        "password": "secret",
-        "role": "USER"
-    }
+  {
+    "username": "new_test.account",
+    "password": "secret",
+    "role": "USER"
+  }
   ```
 - Response:
   ```
-    {
-        "message": "User created",
-        "user": {
-            "id": 2,
-            "username": "new_test.account",
-            "role": "USER",
-            "createdAt": "2019-04-25T19:52:33.000Z",
-            "updatedAt": "2019-04-25T19:52:33.000Z"
-        }
+  {
+    "message": "User created",
+    "user": {
+      "id": 2,
+      "username": "new_test.account",
+      "role": "USER",
+      "createdAt": "2019-04-25T19:52:33.000Z",
+      "updatedAt": "2019-04-25T19:52:33.000Z"
     }
+  }
   ```
 
 ### Update existing user
@@ -91,23 +91,23 @@ Developed with Typescript, Express & TypeORM.
   - `jwt-token` => we should use as the value the token that we received from login.
 - Body:
   ```
-    {
-        "username": "test6.account",
-        "role": "USER"
-    }
+  {
+    "username": "test6.account",
+    "role": "USER"
+  }
   ```
 - Response:
   ```
-    {
-        "message": "User updated!",
-        "user": {
-            "id": 2,
-            "username": "test6.account",
-            "role": "USER",
-            "createdAt": "2019-04-25T19:25:38.000Z",
-            "updatedAt": "2019-04-25T20:18:21.000Z"
-        }
+  {
+    "message": "User updated!",
+    "user": {
+      "id": 2,
+      "username": "test6.account",
+      "role": "USER",
+      "createdAt": "2019-04-25T19:25:38.000Z",
+      "updatedAt": "2019-04-25T20:18:21.000Z"
     }
+  }
   ```
 
 ### Delete user
@@ -116,11 +116,7 @@ Developed with Typescript, Express & TypeORM.
   - `jwt-token` => we should use as the value the token that we received from login.
 - Response:
   ```
-    {
-        "message": "User deleted!"
-    }
+  {
+    "message": "User deleted!"
+  }
   ```
-
----
-
-## Assignment
