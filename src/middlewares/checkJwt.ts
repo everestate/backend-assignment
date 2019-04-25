@@ -15,6 +15,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const { userId, username } = jwtPayload;
+  res.locals.userId = userId;
   const newToken = jwt.sign({ userId, username }, config.jwtSecret, {
     expiresIn: "2h"
   });

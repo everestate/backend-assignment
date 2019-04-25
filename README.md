@@ -120,3 +120,97 @@ Developed with Typescript, Express & TypeORM.
     "message": "User deleted!"
   }
   ```
+
+---
+
+### Get all projects
+- Endpoint: GET `http://localhost:3000/project`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Response:
+  ```
+  [
+    {
+      "id": 1,
+      "name": "Second project",
+      "createdAt": "2019-04-25T20:53:31.000Z",
+      "updatedAt": "2019-04-25T20:59:09.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Best project",
+      "createdAt": "2019-04-25T20:58:05.000Z",
+      "updatedAt": "2019-04-25T20:58:05.000Z"
+    }
+  ]
+  ```
+
+### Get one project by id
+- Endpoint: `http://localhost:3000/project/1`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Response:
+  ```
+  {
+    "id": 1,
+    "name": "Second project"
+  }
+  ```
+
+### Create new project
+- Endpoint: GET `http://localhost:3000/projects`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Body:
+  ```
+  {
+	  "name": "Best project"
+  }
+  ```
+- Response:
+  ```
+  {
+    "message": "Project created",
+    "user": {
+      "id": 2,
+      "name": "Best project",
+      "user": 1,
+      "createdAt": "2019-04-25T20:58:05.000Z",
+      "updatedAt": "2019-04-25T20:58:05.000Z"
+    }
+  }
+  ```
+
+### Update existing project
+- Endpoint: GET `http://localhost:3000/projects/2`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Body:
+  ```
+  {
+    "name": "Second project"
+  }
+  ```
+- Response:
+  ```
+  {
+    "message": "Project updated!",
+    "user": {
+      "id": 1,
+      "name": "Second project",
+      "createdAt": "2019-04-25T20:53:31.000Z",
+      "updatedAt": "2019-04-25T20:59:09.000Z"
+    }
+  }
+  ```
+
+### Delete project
+- Endpoint: GET `http://localhost:3000/project/2`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Response:
+  ```
+  {
+    "message": "Project deleted!"
+  }
+  ```
