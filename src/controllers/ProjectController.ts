@@ -1,15 +1,27 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { validate } from "class-validator";
+import { validate } from "class-validator"; 
 
 import { Project } from "../entities/Project";
 
 class ProjectController {
-  static getAll = async (req: Request, res: Response) => {
+  static getAll = async (req: Request, res: Response) => { 
     const projectEntityRepo = getRepository(Project);
-    const users = await projectEntityRepo.find();
+    let queryBuilder =  projectEntityRepo 
+                            .createQueryBuilder("projects");
 
-    res.send(users);
+    
+    let name = req.query.name || ''; 
+    if(name.length > 0) {
+      name = name.replace('*', '%');      
+
+      queryBuilder = queryBuilder
+                    .where("projects.name like :name", {name: name });
+    } 
+    
+    const projects = await queryBuilder.getMany();
+     
+    res.send(projects);
   };
 
   static getOneById = async (req: Request, res: Response) => {
