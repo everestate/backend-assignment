@@ -27,10 +27,12 @@ class ProjectController {
   };
 
   static createProject = async (req: Request, res: Response) => {
-    let { name } = req.body;
+    let { name, status } = req.body;
     let project = new Project();
     project.name = name;
+    project.status = status;
     project.user = res.locals.userId;
+    
 
     const errors = await validate(project);
     if (errors.length > 0) {
@@ -40,7 +42,7 @@ class ProjectController {
 
     const projectEntityRepo = getRepository(Project);
     try {
-      projectEntityRepo.save(project);
+      await projectEntityRepo.save(project);
     } catch (e) {
       res.status(500).send({ error: "Saving project failed!!!" });
       return;
@@ -48,10 +50,11 @@ class ProjectController {
 
     res.status(200).send({
       message: "Project created",
-      user: {
+      project: {
         id: project.id,
         name: project.name,
         user: project.user,
+        status: project.status,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt
       }
@@ -61,7 +64,7 @@ class ProjectController {
   static editProject = async (req: Request, res: Response) => {
     const id = req.params.id;
 
-    const { name } = req.body;
+    const { name, status } = req.body;
 
     const projectEntityRepo = getRepository(Project);
     let project_entity;
@@ -73,6 +76,7 @@ class ProjectController {
     }
 
     project_entity.name = name;
+    project_entity.status = status || project_entity.status;
     const errors = await validate(project_entity);
     if (errors.length > 0) {
       res.status(400).send(errors[0].constraints);
@@ -80,7 +84,7 @@ class ProjectController {
     }
 
     try {
-      projectEntityRepo.save(project_entity);
+      await projectEntityRepo.save(project_entity);
     } catch (e) {
       res.status(409).send({ error: "Updating project failed!!!" });
       return;
@@ -106,9 +110,14 @@ class ProjectController {
       res.status(404).send({ error: "Project could not be deleted!" });
       return;
     }
-    projectEntityRepo.delete(id);
+    try{
+      await projectEntityRepo.delete(id);
+    } catch(err){
+      res.status(500).send({ error: "Project could not be deleted!" });
+      return;
+    }
 
-    res.status(201).send({ message: "Project deleted!" });
+    res.status(204).send({ message: "Project deleted!" });
   };
 }
 

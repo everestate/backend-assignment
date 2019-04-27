@@ -10,6 +10,7 @@ import {
 import { Length, IsNotEmpty } from "class-validator";
 
 import { User } from "./User";
+import { ProjectStatus } from "../enums/ProjectStatus";
 
 @Entity("projects")
 export class Project {
@@ -23,6 +24,10 @@ export class Project {
   @ManyToOne(_type => User)
   @JoinColumn({ name: "user_id" })
   user!: User;
+
+
+  @Column({ type: "simple-enum", enum: ProjectStatus, default: ProjectStatus.TODO })
+  status: ProjectStatus;
 
   @Column()
   @CreateDateColumn()
