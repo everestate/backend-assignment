@@ -3,21 +3,13 @@ import { getRepository } from "typeorm";
 import { validate } from "class-validator";
  
 import { Task } from "../entities/Task";
+import { Project } from "../entities/Project";
 
 class TaskController {
   static getAll = async (req: Request, res: Response) => {
     const projectId: number = req.params.projectId;
-    let taskEntityRepo = getRepository(Task)
-                          .createQueryBuilder("tasks")                         
-                          .innerJoinAndSelect("tasks.project", "project").where("project.id == :projectId", {projectId: projectId});
-    
-    let strCompleted:string = req.query.completed || ''; 
-    if(strCompleted) { 
-      const completed = strCompleted === "true" || strCompleted === "1" ? 1 : 0;
-      taskEntityRepo = taskEntityRepo.andWhere("tasks.completed == :completed", {completed: completed});
-    }
-
-    const tasks = await taskEntityRepo.getMany();
+    const taskEntityRepo = getRepository(Task);
+    const tasks = await taskEntityRepo.find();
 
     res.send(tasks);
   };
@@ -46,7 +38,8 @@ class TaskController {
 
       const task_entity = <Task>{
         ...req.body,
-        project: projectId
+        project: projectId,
+        completed: false
       };
 
       const errors = await validate(task_entity);
@@ -76,12 +69,14 @@ class TaskController {
     const id = req.params.id;
     const projectId = req.params.projectId;
     const taskEntityRepo = getRepository(Task);
+    const projectEntityRepo = getRepository(Project);
 
     try{
+      let project_entity = await projectEntityRepo.findOne(projectId);
       let task_entity = await taskEntityRepo.findOne(id);
-      if(!task_entity) {
+      if(!task_entity || !project_entity) {
         res.status(404).send({ error: `Task with id ${id} not found` });
-        return 
+        return; 
       }
 
       task_entity = <Task>{
@@ -92,6 +87,11 @@ class TaskController {
       const errors = await validate(task_entity);
       if (errors.length > 0) {
         res.status(422).send(errors[0].constraints);
+        return;
+      }
+
+      if(task_entity.completed && project_entity.user.id != res.locals.userId) {
+        res.status(403).send({ error: `Only owner can mark as completed` });
         return;
       }
 
