@@ -7,10 +7,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn
 } from "typeorm";
-import { Length, IsNotEmpty } from "class-validator";
+import { Length, IsNotEmpty, IsEnum } from "class-validator";
 
-import { User } from "./User";
-import { ProjectStatus } from "../enums/ProjectStatus";
+import { User } from "./User"; 
+
+export enum ProjectStatus {
+  TODO = 'todo',
+  INPROGRESS = 'inprogress',
+  DONE = 'done'
+}
 
 @Entity("projects")
 export class Project {
@@ -26,7 +31,8 @@ export class Project {
   user!: User;
 
 
-  @Column({ type: "simple-enum", enum: ProjectStatus, default: ProjectStatus.TODO })
+  @IsEnum(ProjectStatus)
+  @Column()
   status: ProjectStatus;
 
   @Column()

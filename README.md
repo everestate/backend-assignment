@@ -6,7 +6,14 @@ Developed with Typescript, Express & TypeORM.
 - Clone the repo locally
 - Run `npm i && npm start`
 
+
 > Note: Currently the project is setup with sqlite db, `database.sqlite` in the root folder of the project. If we reset the db then first we need to run `npm start` and then `npm run migration:run` in order to create the first admin user.
+
+## Testing
+
+```bash
+npm run test
+```
 
 ## Existing endpoints
 

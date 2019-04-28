@@ -48,7 +48,7 @@ class ProjectController {
       return;
     }
 
-    res.status(200).send({
+    res.status(201).send({
       message: "Project created",
       project: {
         id: project.id,
@@ -89,7 +89,7 @@ class ProjectController {
       res.status(409).send({ error: "Updating project failed!!!" });
       return;
     }
-    res.status(201).send({
+    res.status(200).send({
       message: "Project updated!",
       user: {
         id: project_entity.id,
