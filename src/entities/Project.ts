@@ -22,7 +22,7 @@ export class Project {
 
   @ManyToOne(_type => User)
   @JoinColumn({ name: "user_id" })
-  user!: User;
+  users: User[];
 
   @Column()
   @CreateDateColumn()

@@ -30,7 +30,7 @@ class ProjectController {
     let { name } = req.body;
     let project = new Project();
     project.name = name;
-    project.user = res.locals.userId;
+    project.users = [res.locals.userId];
 
     const errors = await validate(project);
     if (errors.length > 0) {
@@ -51,7 +51,7 @@ class ProjectController {
       user: {
         id: project.id,
         name: project.name,
-        user: project.user,
+        users: project.users,
         createdAt: project.createdAt,
         updatedAt: project.updatedAt
       }
@@ -87,9 +87,9 @@ class ProjectController {
     }
     res.status(201).send({
       message: "Project updated!",
-      user: {
+      project: {
         id: project_entity.id,
-        user: project_entity.name,
+        name: project_entity.name,
         createdAt: project_entity.updatedAt,
         updatedAt: project_entity.createdAt
       }
