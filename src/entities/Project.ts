@@ -3,9 +3,10 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  ManyToMany,
+  JoinTable
 } from "typeorm";
 import { Length, IsNotEmpty } from "class-validator";
 
@@ -20,8 +21,10 @@ export class Project {
   @Length(4, 100)
   name: string;
 
-  @ManyToOne(_type => User)
-  @JoinColumn({ name: "user_id" })
+  @ManyToMany(_type => User, {
+    cascade: true
+  })
+  @JoinTable()
   users: User[];
 
   @Column()

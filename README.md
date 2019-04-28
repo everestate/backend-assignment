@@ -174,7 +174,6 @@ Developed with Typescript, Express & TypeORM.
     "user": {
       "id": 2,
       "name": "Best project",
-      "user": 1,
       "createdAt": "2019-04-25T20:58:05.000Z",
       "updatedAt": "2019-04-25T20:58:05.000Z"
     }
@@ -212,5 +211,62 @@ Developed with Typescript, Express & TypeORM.
   ```
   {
     "message": "Project deleted!"
+  }
+  ```
+
+  ---
+
+### Get all project users
+- Endpoint: GET `http://localhost:3000/projects/1/users`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Response:
+  ```
+  [
+    {
+      "id": 1,
+      "name": "Admin",
+      "createdAt": "2019-04-25T20:53:31.000Z",
+      "updatedAt": "2019-04-25T20:59:09.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Test User",
+      "createdAt": "2019-04-25T20:58:05.000Z",
+      "updatedAt": "2019-04-25T20:58:05.000Z"
+    }
+  ]
+  ```
+ 
+
+### Create new user of project
+- Endpoint: GET `http://localhost:3000/projects/1/users`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Body:
+  ```
+  {
+	  "userId": 2
+  }
+  ```
+- Response:
+  ```
+  {
+    "message": "User has been added to project",
+    "user": {
+      "id": 2,
+      "name": "Test User"
+    }
+  }
+  ```
+
+### Delete project of user
+- Endpoint: GET `http://localhost:3000/projects/1/users/2`
+- Headers:
+  - `jwt-token` => we should use as the value the token that we received from login.
+- Response:
+  ```
+  {
+    "message": "User of project has been deleted"
   }
   ```
