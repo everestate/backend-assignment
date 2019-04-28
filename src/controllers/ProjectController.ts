@@ -61,7 +61,7 @@ class ProjectController {
   static editProject = async (req: Request, res: Response) => {
     const id = req.params.id;
 
-    const { name } = req.body;
+    const { name, users } = req.body;
 
     const projectEntityRepo = getRepository(Project);
     let project_entity;
@@ -73,6 +73,7 @@ class ProjectController {
     }
 
     project_entity.name = name;
+    project_entity.users = [...users];
     const errors = await validate(project_entity);
     if (errors.length > 0) {
       res.status(400).send(errors[0].constraints);
@@ -97,6 +98,21 @@ class ProjectController {
   };
 
   static deleteProject = async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    const projectEntityRepo = getRepository(Project);
+    try {
+      await projectEntityRepo.findOneOrFail(id);
+    } catch (error) {
+      res.status(404).send({ error: "Project could not be deleted!" });
+      return;
+    }
+    projectEntityRepo.delete(id);
+
+    res.status(201).send({ message: "Project deleted!" });
+  };
+  
+  static deleteUser = async (req: Request, res: Response) => {
     const id = req.params.id;
 
     const projectEntityRepo = getRepository(Project);
