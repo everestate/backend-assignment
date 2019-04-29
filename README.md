@@ -7,7 +7,7 @@ Developed with Typescript, Express & TypeORM.
 - Run `npm i && npm run dev`
 
 ## Testing:
-- Run `npm run dev`
+- Run `npm run test`
 
 > Note: Currently the project is setup with sqlite db, `database.sqlite` in the root folder of the project. If we reset the db then first we need to run `npm start` and then `npm run migration:run` in order to create the first admin user.
 
